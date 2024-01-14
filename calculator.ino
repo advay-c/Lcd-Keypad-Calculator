@@ -80,7 +80,7 @@ if (count ==3)
 if (function == 1 && equal == 1)
 { 
   answer = num4+num3;
-  lcd.showvalue (answer);
+  lcd.showvalue(answer);
   _delay_ms(500);
   equal = 0;
   function = 0;
@@ -88,7 +88,7 @@ if (function == 1 && equal == 1)
 if (function == 2 && equal == 1)
 {
   answer = num3-num4;
-  lcd.showvalue (answer); 
+  lcd.showvalue(answer); 
   _delay_ms(500);
   equal = 0;
   function = 0;
@@ -96,7 +96,7 @@ if (function == 2 && equal == 1)
 if (function == 3 && equal == 1)
 {
   answer = num3*num4;
-  lcd.showvalue (answer);
+  lcd.showvalue(answer);
   _delay_ms(500);
   equal = 0;
   function = 0;
@@ -217,6 +217,7 @@ if (average > 647 && average < 650)
 {
   lcd.string("=");
   equal = result;
+  lcd.showvalue(answer);
   _delay_ms(500);
 }
 if (average > 817 && average < 822)
