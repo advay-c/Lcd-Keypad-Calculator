@@ -36,47 +36,9 @@ if (i>99)
 }
 }
 }
-void compare()
-{
-if (function == 0)
-{
-if (count == 1)
-{
-  num1 = num*100;
-}
-if (count == 2)
-{
-  num2 = num*10;
-}
-if (count == 3)
-{
-  num1 = num + num1 + num2;
-  _delay_ms(500);
-  num=0;
-  num2=0;
-  count = 0;
-}
-}
-if (function >0)
-{
-if (count ==1)
-{
-  num1 = num;
-}
-if (count ==2)
-{
-  num2 = num;
-}
-if (count ==3)
-{
-  num2 = num + num1 + num2;
-  _delay_ms (500);
-  count = 0;
-  num=0;
-  num1=0;
-  num2=0;
-}
-}
+
+void compare() {
+  
 if (function == 1 && equal == 1)
 { 
   answer = num2+num1;
@@ -199,12 +161,13 @@ if (average > 856 && average < 862)
 if (average > 460 && average < 465)
 {
   lcd.cmd(0x01);
-int count = 0;
-int num = 0;
-int num1,num2,num3,num4=0;
-int function = 0;
-int equal = 0;
-int answer = 0;
+  count = 0;
+  num = 0;
+  num1 = 0;
+  num2 = 0;
+  function = 0;
+  equal = 0;
+  answer = 0;
 }
 if (average > 591 && average < 595)
 {
@@ -226,5 +189,14 @@ if (average > 817 && average < 822)
   function = 4;
   equal = 0;
   _delay_ms(300);
+}
+if (count == 1)
+{
+  num1 = num;
+}
+if (count == 2)
+{
+  num2 = num;
+  count = 0;
 }
 }
