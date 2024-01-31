@@ -41,7 +41,7 @@ void compare() {
   
 if (function == 1 && equal == 1)
 { 
-  answer = num2+num1;
+  answer = num2 + num1;
   lcd.showvalue(answer);
   _delay_ms(500);
   equal = 0;
@@ -49,7 +49,7 @@ if (function == 1 && equal == 1)
 }
 if (function == 2 && equal == 1)
 {
-  answer = num1-num2;
+  answer = num1 - num2;
   lcd.showvalue(answer); 
   _delay_ms(500);
   equal = 0;
@@ -57,7 +57,7 @@ if (function == 2 && equal == 1)
 }
 if (function == 3 && equal == 1)
 {
-  answer = num1*num2;
+  answer = num1 * num2;
   lcd.showvalue(answer);
   _delay_ms(500);
   equal = 0;
