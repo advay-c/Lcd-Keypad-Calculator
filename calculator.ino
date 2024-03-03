@@ -28,8 +28,10 @@ result += ADCW;
 i++;
 if (i>99)
 {
+   average = result/100;
    compare();
    compare1();
+   answer = 0;
    result = 0;
    average = 0;
    i=0;
@@ -139,16 +141,16 @@ if (average > 817 && average < 822)
   operatorz = '/';
   _delay_ms(300);
 }
-if (operatorz = '/') {
+if (operatorz == '/') {
   answer = num1/num2;
 }
-else if (operatorz = '+') {
+else if (operatorz == '+') {
   answer = num1 + num2;
 }
-else if (operatorz = '-') {
+else if (operatorz == '-') {
   answer = num1 - num2;
 }
-else if (operatorz = '*') {
+else if (operatorz == '*') {
   answer = num1 * num2;
 }
 }
