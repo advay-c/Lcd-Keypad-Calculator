@@ -1,3 +1,4 @@
+//open serial monitor and record values (youll need to add the min and max value for the calc to properly reconize the buttons pressed)
 #include<avr/io.h>
 #include <avr/interrupt.h>
 #include<LCD.h>
