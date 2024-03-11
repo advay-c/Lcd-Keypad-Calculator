@@ -6,13 +6,9 @@
 LCD lcd;
 int i=0; 
 long result, average;
-int count = 0;
-int num = 0;
 int num1,num2;
 int function; 
-int equal=0; 
 int answer=0; 
-int position=0; 
 char operatorz = ' ';
 int main (void)
 {
