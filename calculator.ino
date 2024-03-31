@@ -212,6 +212,7 @@ if (average > 647 && average < 650)
   operatorz = '=';
   lcd.string("=");
   lcd.showvalue(answer);
-  _delay_ms(500);
+  lcd.cmd(0xC0); 
+  _delay_ms(1000);
 }
 }
