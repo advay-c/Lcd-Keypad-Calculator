@@ -112,12 +112,8 @@ if (average > 856 && average < 869)
 if (average > 461 && average < 465)
 {
   lcd.cmd(0x01);
-  count = 0;
-  num = 0;
   num1 = 0;
   num2 = 0;
-  function = 0;
-  equal = 0;
   answer = 0;
 }
 if (average > 591 && average < 595)
@@ -201,12 +197,8 @@ if (average > 671 && average < 675)
 if (average > 461 && average < 465)
 {
   lcd.cmd(0x01);
-  count = 0;
-  num = 0;
   num1 = 0;
   num2 = 0;
-  function = 0;
-  equal = 0;
   answer = 0;
 }
 if (average > 591 && average < 595)
