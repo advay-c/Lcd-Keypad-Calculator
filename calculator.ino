@@ -129,21 +129,18 @@ if (average > 817 && average < 822)
   operatorz = '/';
   _delay_ms(300);
 }
-int num11 = num1.toInt();
-int num22 = num2.toInt();
-
 
 if (operatorz == '/') {
-  answer = num11/num22;
+  answer = num1.toInt() / num2.toInt();
 }
 else if (operatorz == '+') {
-  answer = num11 + num22;
+  answer = num1.toInt() + num2.toInt();
 }
 else if (operatorz == '-') {
-  answer = num11 - num22;
+  answer = num1.toInt() - num2.toInt();
 }
 else if (operatorz == '*') {
-  answer = num11 * num22;
+  answer = num1.toInt() * num2.toInt();
 }
 }
 
