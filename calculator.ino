@@ -138,7 +138,7 @@ else if (operatorz == '-') {
   answer = num1 - num2;
 }
 else if (operatorz == '*') {
-  answer = num1 * num2;
+  answer = (num1 * num2) / 2;
 }
 }
 
