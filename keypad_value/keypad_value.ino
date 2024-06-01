@@ -1,10 +1,9 @@
 //open serial monitor and record values (youll need to add the min and max value for the calc to properly reconize the buttons pressed)
 #include<avr/io.h>
-#include <avr/interrupt.h>
+#include <util/delay.h>
 #include<LCD.h>
 #define checkbit(x, y) ((x) & (y))
-#define bitn(p) 0x01 << (p))
-LCD Icd;
+#define bitn(p) (0x01 << (p))
 int i=0; 
 long result, average;
 
@@ -15,7 +14,7 @@ int main (void)
   {
     ADMUX = 0x44;
     ADCSRA = 0xC7;
-    while checkbit(ADCSRA, bitn(ADSC)));
+    while(checkbit(ADCSRA, bitn(ADSC)));
     result = result + ADCW;
     i++;
     if (i>99)
