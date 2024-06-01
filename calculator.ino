@@ -1,28 +1,29 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <LCD.h>
-
-#define checkbit(x, y) ((x) & (y))
-#define bitn(p) (0x01 << (p))
-
+#define checkbit(x, y) ((x) & (y)) // Macro to check a specific bit in a byte
+#define bitn(p) (0x01 << (p)) // Macro to generate a bitmask for a given bit position
 LCD lcd;
-long result, average;
+long result, average; // Variables to store ADC result and average
 int num1, num2;
 int i = 0;
 char operatorz = ' ';
-bool isSecondNumber = false;
+bool isSecondNumber = false; // Flag to indicate if the second number is being input
 
+// Initialize ADC with appropriate settings
 void init_ADC() {
     ADMUX = 0x44; // Select Vref=AVcc and select channel 4 (PC4)
     ADCSRA = 0xC7; // Enable ADC, start conversion, auto trigger enable, interrupt enable
 }
 
+// Read ADC value and return it
 long read_ADC() {
     ADCSRA |= (1 << ADSC); // Start conversion
     while (checkbit(ADCSRA, (1 << ADSC))); // Wait for conversion to complete
     return ADCW; // Read ADC value
 }
 
+// Clear the LCD and reset variables
 void clear() {
     lcd.cmd(0x01); // Clear LCD
     num1 = 0;
@@ -34,6 +35,7 @@ void clear() {
     isSecondNumber = false;
 }
 
+// Perform arithmetic operation based on the operator
 void performOperation() {
     switch (operatorz) {
         case '+':
@@ -57,11 +59,12 @@ void performOperation() {
             break;
     }
     lcd.string("=");
-    lcd.showvalue(result);
+    lcd.showvalue(result); // Display the result on the LCD
     _delay_ms(500);
     clear(); // Reset for next calculation
 }
 
+// Compare ADC value ranges and update the display and operands
 void compare() {
     if (average > 519 && average < 523) {
         lcd.string("1");
