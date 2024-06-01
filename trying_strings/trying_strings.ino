@@ -1,212 +1,129 @@
-#include<avr/io.h>
+#include <avr/io.h>
 #include <avr/interrupt.h>
-#include<LCD.h>
+#include <LCD.h>
+
 #define checkbit(x, y) ((x) & (y))
-#define bitn(p) 0x01 << (p))
+#define bitn(p) (0x01 << (p))
+
 LCD lcd;
-int i=0; 
 long result, average;
-String num1,num2;
-int count;
-int function; 
-int answer=0; 
+int num1, num2;
+int i = 0;
 char operatorz = ' ';
-int main (void)
-{
-  lcd.init();
-  lcd.cmd(0x0C);
-  lcd.line1(0);
-while(1)
-{
-ADMUX = 0x44;
-ADCSRA = 0xC7;
-while(checkbit(ADCSRA, (bitn(ADSC)));
-result += ADCW;
-i++;
-if (i>99)
-{
-   average = result/100;
-   compare();
-   compare1();
-   get_ans();
-   answer = 0;
-   result = 0;
-   average = 0;
-   i=0;
+bool isSecondNumber = false;
+
+void init_ADC() {
+    ADMUX = 0x44; // Select Vref=AVcc and select channel 4 (PC4)
+    ADCSRA = 0xC7; // Enable ADC, start conversion, auto trigger enable, interrupt enable
 }
+
+long read_ADC() {
+    ADCSRA |= (1 << ADSC); // Start conversion
+    while (checkbit(ADCSRA, (1 << ADSC))); // Wait for conversion to complete
+    return ADCW; // Read ADC value
 }
+
+void clear() {
+    lcd.cmd(0x01); // Clear LCD
+    num1 = 0;
+    num2 = 0;
+    operatorz = ' ';
+    result = 0;
+    average = 0;
+    i = 0;
+    isSecondNumber = false;
+}
+
+void performOperation() {
+    switch (operatorz) {
+        case '+':
+            result = num1 + num2;
+            break;
+        case '-':
+            result = num1 - num2;
+            break;
+        case '*':
+            result = num1 * num2;
+            break;
+        case '/':
+            if (num2 != 0) {
+                result = num1 / num2;
+            } else {
+                result = 0; // Handle division by zero
+            }
+            break;
+        default:
+            result = num1; // Default to first number if no operator
+            break;
+    }
+    lcd.string("=");
+    lcd.showvalue(result);
+    _delay_ms(500);
+    clear(); // Reset for next calculation
 }
 
 void compare() {
-  
-if (average > 519 && average < 523)
-{
- lcd.string("1");
- num1 += "1";
- _delay_ms(300);
-}
-if (average > 690 && average < 694)
-{
-  lcd.string("2");
-  num1 += "2";
-  _delay_ms(300);
-}
-if (average > 766 && average < 770)
-{
-  lcd.string("3");
-  num1 += "3";
-  _delay_ms(300);
-}
-if (average > 1018 && average < 1023)
-{
-  lcd.string("+");
-  operatorz = '+';
-  _delay_ms(300);
-}
-if (average > 489 && average < 493)
-{
-  lcd.string("4");
-  num1 += "4";
-  _delay_ms(300);
-}
-if (average > 639 && average < 642)
-{
-  lcd.string("5");
-  num1 += "5";
-  _delay_ms(300);
-}
-if (average > 704 && average < 708)
-{
-  lcd.string("6");
-  num1 += "6";
-  _delay_ms(300);
-}
-if (average > 910 && average < 914)
-{
-  lcd.string("-");
-  operatorz = '-';
-  _delay_ms(300);
-}
-if (average > 473 && average < 478)
-{
-  lcd.string("7");
-  num1 += "7";
-  _delay_ms(300);
-}
-if (average > 611 && average < 615)
-{
-  lcd.string("8");
-  num1 += "8";
-  _delay_ms(300);  
-}
-if (average > 671 && average < 675)
-{
-  lcd.string("9");
-  num1 += "9";
-  _delay_ms(300);  
-}
-if (average > 856 && average < 869)
-{
-  lcd.string("*");
-  operatorz = '*';
-  _delay_ms(300);
-}
-if (average > 461 && average < 465)
-{
-  lcd.cmd(0x01);
-  num1 = "0";
-  num2 = "0";
-  answer = 0;
-}
-if (average > 591 && average < 595)
-{
-  lcd.string("0");
-  num1 += "0";
-  _delay_ms(300);
-}
-if (average > 817 && average < 822)
-{
-  lcd.string("/");
-  operatorz = '/';
-  _delay_ms(300);
-}
+    if (average > 519 && average < 523) {
+        lcd.string("1");
+        if (isSecondNumber) num2 = num2 * 10 + 1; else num1 = num1 * 10 + 1;
+    } else if (average > 690 && average < 694) {
+        lcd.string("2");
+        if (isSecondNumber) num2 = num2 * 10 + 2; else num1 = num1 * 10 + 2;
+    } else if (average > 766 && average < 770) {
+        lcd.string("3");
+        if (isSecondNumber) num2 = num2 * 10 + 3; else num1 = num1 * 10 + 3;
+    } else if (average > 1018 && average < 1023) {
+        lcd.string("+");
+        operatorz = '+';
+        isSecondNumber = true;
+    } else if (average > 489 && average < 493) {
+        lcd.string("4");
+        if (isSecondNumber) num2 = num2 * 10 + 4; else num1 = num1 * 10 + 4;
+    } else if (average > 639 && average < 642) {
+        lcd.string("5");
+        if (isSecondNumber) num2 = num2 * 10 + 5; else num1 = num1 * 10 + 5;
+    } else if (average > 704 && average < 708) {
+        lcd.string("6");
+        if (isSecondNumber) num2 = num2 * 10 + 6; else num1 = num1 * 10 + 6;
+    } else if (average > 910 && average < 914) {
+        lcd.string("-");
+        operatorz = '-';
+        isSecondNumber = true;
+    } else if (average > 473 && average < 478) {
+        lcd.string("7");
+        if (isSecondNumber) num2 = num2 * 10 + 7; else num1 = num1 * 10 + 7;
+    } else if (average > 611 && average < 615) {
+        lcd.string("8");
+        if (isSecondNumber) num2 = num2 * 10 + 8; else num1 = num1 * 10 + 8;
+    } else if (average > 671 && average < 675) {
+        lcd.string("9");
+        if (isSecondNumber) num2 = num2 * 10 + 9; else num1 = num1 * 10 + 9;
+    } else if (average > 856 && average < 869) {
+        lcd.string("*");
+        operatorz = '*';
+        isSecondNumber = true;
+    } else if (average > 461 && average < 465) {
+        clear();
+    } else if (average > 591 && average < 595) {
+        lcd.string("0");
+        if (isSecondNumber) num2 = num2 * 10 + 0; else num1 = num1 * 10 + 0;
+    } else if (average > 817 && average < 822) {
+        lcd.string("/");
+        operatorz = '/';
+        isSecondNumber = true;
+    } else if (average > 647 && average < 650) {
+        performOperation();
+    }
+    _delay_ms(300); // Debounce delay
 }
 
-void compare1() {
-  
-if (average > 519 && average < 523)
-{
- num2 += "1";
- _delay_ms(300);
-}
-if (average > 690 && average < 694)
-{
-  num2 += "2";
-  _delay_ms(300);
-}
-if (average > 766 && average < 770)
-{
-  num2 += "3";
-  _delay_ms(300);
-}
-if (average > 489 && average < 493)
-{
-  num2 += "4";
-  _delay_ms(300);
-}
-if (average > 639 && average < 642)
-{
-  num2 += "5";
-  _delay_ms(300);
-}
-if (average > 704 && average < 708)
-{
-  num2 += "6";
-  _delay_ms(300);
-}
-if (average > 473 && average < 478)
-{
-  num2 += "7";
-  _delay_ms(300);
-}
-if (average > 611 && average < 615)
-{
-  num2 += "8";
-  _delay_ms(300);  
-}
-if (average > 671 && average < 675)
-{
-  num2 += "9";
-  _delay_ms(300);  
-}
-if (average > 461 && average < 465)
-{
-  lcd.cmd(0x01);
-  num1 = "0";
-  num2 = "0";
-  answer = 0;
-}
-if (average > 591 && average < 595)
-{
-  num2 += "0";
-  _delay_ms(300);
-}
-if (operatorz == '/') {
-    answer = num1.toInt() / num2.toInt();
-} else if (operatorz == '+') {
-    answer = num1.toInt() + num2.toInt();
-} else if (operatorz == '-') {
-    answer = num1.toInt() - num2.toInt();
-} else if (operatorz == '*') {
-    answer = num1.toInt() * num2.toInt();
-}
-}
-void get_ans(){
-if (average > 647 && average < 650)
-{
-  operatorz = '=';
-  lcd.string("=");
-  lcd.showvalue(answer/2);
-  _delay_ms(500);
-}
+int main(void) {
+    lcd.init();
+    lcd.cmd(0x0C); // Display on, cursor off
+    lcd.line1(0);
+    init_ADC();
+    while (1) {
+        average = read_ADC();
+        compare();
+    }
 }
