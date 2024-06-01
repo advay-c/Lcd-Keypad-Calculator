@@ -66,33 +66,33 @@ void performOperation() {
 
 // Compare ADC value ranges and update the display and operands
 void compare() {
-    if (average > 519 && average < 523) {
+    if (average > 511 && average < 525) {
         lcd.string("1");
         if (isSecondNumber) num2 = num2 * 10 + 1; else num1 = num1 * 10 + 1;
-    } else if (average > 690 && average < 694) {
+    } else if (average > 688 && average < 694) {
         lcd.string("2");
         if (isSecondNumber) num2 = num2 * 10 + 2; else num1 = num1 * 10 + 2;
-    } else if (average > 766 && average < 770) {
+    } else if (average > 766 && average < 771) {
         lcd.string("3");
         if (isSecondNumber) num2 = num2 * 10 + 3; else num1 = num1 * 10 + 3;
     } else if (average > 1018 && average < 1023) {
         lcd.string("+");
         operatorz = '+';
         isSecondNumber = true;
-    } else if (average > 489 && average < 493) {
+    } else if (average > 488 && average < 493) {
         lcd.string("4");
         if (isSecondNumber) num2 = num2 * 10 + 4; else num1 = num1 * 10 + 4;
-    } else if (average > 639 && average < 642) {
+    } else if (average > 638 && average < 642) {
         lcd.string("5");
         if (isSecondNumber) num2 = num2 * 10 + 5; else num1 = num1 * 10 + 5;
-    } else if (average > 704 && average < 708) {
+    } else if (average > 703 && average < 708) {
         lcd.string("6");
         if (isSecondNumber) num2 = num2 * 10 + 6; else num1 = num1 * 10 + 6;
-    } else if (average > 910 && average < 914) {
+    } else if (average > 909 && average < 914) {
         lcd.string("-");
         operatorz = '-';
         isSecondNumber = true;
-    } else if (average > 473 && average < 478) {
+    } else if (average > 472 && average < 478) {
         lcd.string("7");
         if (isSecondNumber) num2 = num2 * 10 + 7; else num1 = num1 * 10 + 7;
     } else if (average > 611 && average < 615) {
@@ -107,7 +107,7 @@ void compare() {
         isSecondNumber = true;
     } else if (average > 461 && average < 465) {
         clear();
-    } else if (average > 591 && average < 595) {
+    } else if (average > 590 && average < 595) {
         lcd.string("0");
         if (isSecondNumber) num2 = num2 * 10 + 0; else num1 = num1 * 10 + 0;
     } else if (average > 817 && average < 822) {
